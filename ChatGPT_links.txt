@@ -1,0 +1,9 @@
+Prompt format:
+Summarize the following content and give a step-by-step guide on solving each exercise: [COPY-PASTE OF .md FILE]
+
+s1ex1:
+https://chat.openai.com/share/b2db00d3-a840-4285-96bc-ebe777912110
+
+s1ex2:
+https://chat.openai.com/share/1442d1b4-7f1d-40cc-a751-bc93e2135739
+

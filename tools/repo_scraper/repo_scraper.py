@@ -147,16 +147,16 @@ def main(
     os.makedirs(out_folder)
 
     # clone repos
-    print("====== Cloning repos ======")
-    for index, data in enumerate(formatted_data):
+    print("Cloning repos")
+    for data in formatted_data:
         group_nb, _, repo = data
-        print(f"Cloning group {group_nb}, {index}/{len(formatted_data)}")
+        print(f"Processing group {group_nb}/{len(formatted_data)}")
         out = os.system(f"cd {out_folder} && timeout -v {timeout_clone} git clone -q {repo}")
         clone_succes = out == 0
         folder_name = repo.split("/")[-1]
         data.append(clone_succes)
         if clone_succes:
-            os.system(f"cd {out_folder} && cp -r {folder_name} group_{group_nb} && rm -rf {folder_name}")
+            os.system(f"cd {out_folder} && mv {folder_name} group_{group_nb}")
         else:
             if folder_name in os.listdir(out_folder):
                 shutil.rmtree(f"{out_folder}/{folder_name}")
@@ -188,9 +188,8 @@ def main(
     )
 
     # extract info through API
-    print("====== Extracting info through API ======")
-    for index, (group_nb, num_students, repo, clone_succes) in enumerate(formatted_data):
-        print(f"Processing group {group_nb}, {index}/{len(formatted_data)}")
+    for group_nb, num_students, repo, clone_succes in formatted_data:
+        print(f"Processing group {group_nb}/{len(formatted_data)}")
         repo = reformat_repo(repo)
         exists = requests.get(f"https://api.github.com/repos/{repo}", headers=headers, timeout=100)
         if exists.status_code == 200:

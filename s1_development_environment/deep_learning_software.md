@@ -6,21 +6,21 @@
 
 !!! info "Core Module"
 
-Deep learning has since its
+Deep learning have since its
 [revolution back in 2012](https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html)
 transformed our lives. From Google Translate to driverless cars
 to personal assistants to protein engineering, deep learning is transforming nearly every sector of our economy and
-our lives. However, it did not take long before people realized that deep learning is not a simple beast to tame
-and it comes with its own kinds of problems, especially if you want to use it in a production setting. In particular
+or lives. However, it did not take long before people realized that deep learning is not as simple beast to tame
+and it comes with its own kind of problems, especially if you want to use it in a production setting. In particular
 the concept of [technical debt](https://research.google/pubs/pub43146/) was invented to indicate the significant
-maintenance costs at a system level that it takes to run machine learning in production. MLOps should very much
+maintenance costs at an system level that it takes to run machine learning in production. MLOps should very much
 be seen as the response to the concept of technical debt, namely that we should develop methods, processes and tools
 (with inspiration from classical DevOps) to counter the problems we run into when working with deep learning models.
 
 It is important to note that all the concepts and tools that have been developed for MLOps can absolutely be used
 together with more classical machine learning models (think K-nearest neighbor, Random forest etc.), however
 deep learning comes with its own set of problems which mostly have to do with the sheer size of the data and models
-we are working with. For these reasons, we are focusing on working with deep learning models in this course.
+we are working with. For these reason, we are focusing on working with deep learning models in this course
 
 ## Software landscape for Deep Learning
 
@@ -37,24 +37,25 @@ frameworks (listed in order of when they were published):
 
 * [JAX](https://github.com/google/jax)
 
-We won't go into a longer discussion on which framework is best, as it is pointless. Pytorch and Tensorflow
+We won't go into a longer discussion on what framework is the best, as it is pointless. Pytorch and Tensorflow
 have been around for the longest and therefore have bigger communities and feature sets at this point in time.
-They are both very similar in the sense that they both have features directed against research and production.
-JAX is kind of the new kid on the block, which in many ways improves on Pytorch and Tensorflow, but is still
-not as mature as the other frameworks. As the frameworks use different kind of programming principles
+They both very similar in the sense that they both have features directed against research and production.
+JAX is kind of the new kid on the block, that in many ways improve on Pytorch and Tensorflow, but is still
+not as mature as the other frameworks. As the frameworks uses different kind programming principles
 (object oriented vs. functional programming), comparing them is essentially meaningless.
 
 In this course we have chosen to work with Pytorch, because we find it a bit more intuitive and it is the
-framework that we use for our day to day research life. Additionally, as of right now it is absolutely
+framework that we use for our day to day research life. Additionally, as of right now it is the absolutely
 the [dominating framework](https://www.assemblyai.com/blog/pytorch-vs-tensorflow-in-2022/) for published
 models, research papers and [competition winners](https://blog.mlcontests.com/p/winning-at-competitive-ml-in-2022?s=w)
 
-The intention behind this set of exercises is to bring everyone's Pytorch skills up-to-date. If you already
-are a Pytorch-Jedi feel free to pass the first set of exercises, but I recommend that you still complete it.
+\
+The intention behind this set of exercises is to bring everyones Pytorch skills up-to-date. If you already
+are Pytorch-Jedi feel free to pass the first set of exercises, but I recommend that you still complete it.
 The exercises are in large part taken directly from the
 [deep learning course at udacity](https://github.com/udacity/deep-learning-v2-pytorch).
 Note that these exercises are given as notebooks, which is the last time we are going to use them actively in course.
-Instead, after this set of exercises, we are going to focus on writing code in python scripts.
+Instead after this set of exercises we are going to focus on writing code in python scripts.
 
 The notebooks contains a lot of explaining text. The exercises that you are supposed to fill out are inlined in
 the text in small "exercise" blocks:
@@ -63,10 +64,10 @@ the text in small "exercise" blocks:
   ![Image](../figures/exercise.PNG){width="1000"}
 </figure>
 
-If you need a fresh-up on any deep learning topic in general throughout the course, we recommend to find the relevant
+If you need a fresh up on any deep learning topic in general throughout the course, we recommend to find the relevant
 chapter in the [deep learning](https://www.deeplearningbook.org/) book by Ian Goodfellow,
 Yoshua Bengio and Aaron Courville (can also be found in the literature folder). It is absolutely not necessary to be
-good at deep learning to pass this course as the focus is on all the software needed to get deep learning models into
+good at deep learning to pass this course as the focus on all the software needed to get deep learning models into
 production. However, it is important to have a basic understanding of the concepts.
 
 ### ❔ Exercises
@@ -118,7 +119,7 @@ production. However, it is important to have a basic understanding of the concep
 
         ```python
         a = torch.randn(N, d)
-        b = torch.randn(M, d)
+        b = torch.randn(N, d)
         dist = torch.sum((a.unsqueeze(1) - b.unsqueeze(0))**2, dim=2)  # shape [N, M]
         ```
 
@@ -162,8 +163,8 @@ production. However, it is important to have a basic understanding of the concep
 ### Final exercise
 
 As the final exercise we will develop a simple baseline model which we will continue to develop on during the course.
-For this exercise we provide the data in the `data/corruptmnist` folder. Do **NOT** use the data in the
-`corruptmnist_v2` folder as that is intended for another exercise. As the name suggest this is a (subsampled)
+For this exercise we provide the data in the `data/corruptedmnist` folder. Do **NOT** use the data in the
+`corruptedmnist_v2` folder as that is intended for another exercise. As the name suggest this is a (subsampled)
 corrupted version of regular [MNIST](https://en.wikipedia.org/wiki/MNIST_database). Your overall task is the following:
 
 > **Implement a MNIST neural network that achieves at least 85 % accuracy on the test set.**
@@ -180,14 +181,6 @@ in the future as you start to add more and more features. As subgoals, please fu
 2. Implement your data setup in a script called `data.py`. The data was saved using `torch.save`, so to load it you
     should use `torch.load`.
 
-    !!! warning "Saving the model"
-
-        When saving the model, you should use `torch.save(model.state_dict(), "model.pt")` and when loading the model
-        you should use `model.load_state_dict(torch.load("model.pt"))`. If you do `torch.save(model, "model.pt")` this
-        can lead to problems when loading the model later on, as it will try to not only save the model weights but
-        also the model definition. This can lead to problems if you change the model definition later on (which you
-        most likely is going to do).
-
 3. Implement training and evaluation of your model in `main.py` script. The `main.py` script should be able to
     take an additional subcommands indicating if the model should train or evaluate. It will look something like this:
 
@@ -198,49 +191,10 @@ in the future as you start to add more and more features. As subgoals, please fu
 
     which can be implemented in various ways.
 
-    ??? example "VS code and command line arguments"
-
-        If you try to execute the above code in VS code using the debugger (F5) or the build in run functionality in the
-        upper right corner:
-
-        <figure markdown>
-        ![Image](../figures/vs_code_run.png){width="300"}
-        </figure>
-
-        you will get an error message saying that you need to select a command to run e.g. `main.py` either needs the
-        `train` or `evaluate` command. This can be fixed by adding a `lunch.json` to a specialized `.vscode` folder in
-        the root of the project. The `lunch.json` file should look something like this:
-
-        ```json
-        {
-            "version": "0.2.0",
-            "configurations": [
-                {
-                    "name": "Python: Current File",
-                    "type": "python",
-                    "request": "launch",
-                    "program": "${file}",
-                    "args": [
-                        "train",
-                        "--lr",
-                        "1e-4"
-                    ],
-                    "console": "integratedTerminal",
-                    "justMyCode": true
-                }
-            ]
-        }
-        ```
-
-        This will inform VS code that then we execute the current file (in this case `main.py`) we want to run it with
-        the `train` command and additionally pass the `--lr` argument with the value `1e-4`. You can read more about
-        creating a `lunch.json` file [here](https://code.visualstudio.com/docs/python/debugging). If you want to have
-        multiple configurations you can add them to the `configurations` list as additional dictionaries.
-
 To start you off, a very basic version of each script is provided in the `final_exercise` folder. We have already
 implemented some logic, especially to make sure you can easily run different subcommands in for step 4. If you are
 interested in how this is done you can checkout this optional module on defining
-[command line interfaces (CLI)](../s10_extra/cli.md). We additionally also provide an `requirements.txt` with
+[command line interfaces (CLI)](../s10_extra/cli.md). We additionally also provide an `requirements.py` with
 suggestion to what packages are necessary to complete the exercise.
 
 As documentation that your model is actually working, when running in the `train` command the script needs to
